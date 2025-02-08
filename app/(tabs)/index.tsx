@@ -58,7 +58,7 @@ export default function TabOneScreen() {
           </View>
 
           {/* Add space between sections */}
-          <View style={{ marginBottom: 24 }} /> {/* Adjust this value for more or less space */}
+          <View style={{ marginBottom: 24 }} />
 
           {/* Recent Job List Section */}
           <View style={styles.section}>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4, // Adjusted to create a bottom shadow
+      height: 4, 
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
