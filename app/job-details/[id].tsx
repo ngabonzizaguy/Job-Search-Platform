@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import JobDetails from '../../components/job/JobDetails';
-import { Job } from '../../components/job/JobDetails';
+import JobDetails, { Job } from '../../components/job/JobDetails';
 
 // Mock data - in a real app, this would come from an API
 const jobsData = {
@@ -13,14 +12,19 @@ const jobsData = {
     location: 'California, USA',
     type: 'Fulltime',
     salary: '$7K/Month',
-    logoIcon: 'logo-pinterest',
+    logoIcon: require('../../assets/icon_imgs/png/001-pinterest.png'),
     logoColor: '#E60023',
     level: 'Senior',
-    description: 'We are looking for a Motion Designer to join our creative team. You will be responsible for creating engaging animations and visual effects for our platform.',
+    description: [
+      'Deliver a well-crafted design that follows standard for consistency in quality and experience.',
+      'Design creative solutions that deliver not only value customer but also solve business objectives.',
+      'You are also required to contribute to the design and critics, conceptual discussion, and also maintaining consistency of design system.',
+    ],
     requirements: [
-      '5+ years of experience in Motion Design',
-      'Proficiency in After Effects and other animation tools',
-      'Strong portfolio demonstrating motion design skills',
+      'Lead',
+      'UX Design',
+      'Problem Solving',
+      'Critical',
     ],
   },
   '2': {
@@ -29,14 +33,19 @@ const jobsData = {
     location: 'California, USA',
     type: 'Fulltime',
     salary: '$8K/Month',
-    logoIcon: 'logo-facebook',
+    logoIcon: require('../../assets/icon_imgs/png/004-facebook.png'),
     logoColor: '#1877F2',
     level: 'Senior',
-    description: 'Join our team as a UI Designer to create beautiful and intuitive interfaces for our products.',
+    description: [
+      'Deliver a well-crafted design that follows standard for consistency in quality and experience.',
+      'Design creative solutions that deliver not only value customer but also solve business objectives.',
+      'You are also required to contribute to the design and critics, conceptual discussion, and also maintaining consistency of design system.',
+    ],
     requirements: [
-      '4+ years of UI/UX design experience',
-      'Experience with Figma and design systems',
-      'Strong portfolio of web and mobile designs',
+      'Lead',
+      'UX Design',
+      'Problem Solving',
+      'Critical',
     ],
   },
   '3': {
@@ -45,14 +54,19 @@ const jobsData = {
     location: 'California, USA',
     type: 'Fulltime',
     salary: '$5K/Month',
-    logoIcon: 'logo-google',
+    logoIcon: require('../../assets/icon_imgs/png/003-google.png'),
     logoColor: '#4285F4',
     level: 'Senior',
-    description: 'We are looking for a Product Designer to join our team. You will be responsible for the user experience and interface design of our products.',
+    description: [
+      'Deliver a well-crafted design that follows standard for consistency in quality and experience.',
+      'Design creative solutions that deliver not only value customer but also solve business objectives.',
+      'You are also required to contribute to the design and critics, conceptual discussion, and also maintaining consistency of design system.',
+    ],
     requirements: [
-      '5+ years of experience in Product Design',
-      'Strong portfolio demonstrating UX/UI skills',
-      'Experience with design systems',
+      'Lead',
+      'UX Design',
+      'Problem Solving',
+      'Critical',
     ],
   },
   '4': {
@@ -73,6 +87,12 @@ const jobsData = {
   },
 };
 
+// Update the Job interface to include logo
+interface ExtendedJob extends Job {
+  logoIcon: any;
+  logoColor: string;
+}
+
 export default function JobDetailsScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
@@ -87,17 +107,45 @@ export default function JobDetailsScreen() {
   }
 
   // Transform the job data to match the Job interface
-  const job: Job = {
-    title: jobData.position, // Map 'position' to 'title'
-    location: jobData.location,
+  const job: ExtendedJob = {
+    title: jobData.position,
     company: jobData.company,
-    responsibilities: jobData.description ? [jobData.description] : [], // Assuming description is a single string
-    skills: jobData.requirements, // Assuming requirements are the skills needed
+    location: jobData.location,
+    responsibilities: Array.isArray(jobData.description) ? jobData.description : [jobData.description],
+    skills: jobData.requirements,
+    salary: jobData.salary,
+    logoIcon: jobData.logoIcon,
+    logoColor: jobData.logoColor,
+  };
+
+  const handleApply = () => {
+    // In a real app, this would navigate to an application form or external link
+    console.log('Apply clicked for job:', id);
+  };
+
+  const handleChat = () => {
+    // In a real app, this would open a chat interface
+    console.log('Chat clicked for job:', id);
+  };
+
+  const handleBack = () => {
+    // Navigate back to the home tab
+    router.push("/");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <JobDetails job={job} /> {/* Pass the transformed job data */}
+      <TouchableOpacity 
+        style={styles.backButton} 
+        onPress={handleBack}
+      >
+        <Ionicons name="arrow-back" size={24} color="#000" />
+      </TouchableOpacity>
+      <JobDetails 
+        job={job}
+        onApply={handleApply}
+        onChat={handleChat}
+      />
     </SafeAreaView>
   );
 }
@@ -122,7 +170,24 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   backButton: {
-    padding: 8,
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 4,
   },
   bookmarkButton: {
     padding: 8,

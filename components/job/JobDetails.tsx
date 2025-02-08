@@ -1,240 +1,319 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  useWindowDimensions,
+  ImageBackground,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
+/**
+ * Types and Interfaces
+ */
 export interface Job {
   title: string;
-  location: string;
   company: string;
+  location: string;
   responsibilities: string[];
-  skills: string[]; 
+  skills: string[];
+  salary?: string;
+  logoIcon?: any; // Company logo image source
+  logoColor?: string; // Brand color for UI accents
 }
 
 interface JobDetailsProps {
-  job: Job; 
+  job: Job;
+  onApply?: () => void; // Callback for apply button press
+  onChat?: () => void;  // Callback for chat button press
 }
 
-const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
+/**
+ * JobDetails Component
+ * 
+ * A detailed view of a job posting, including:
+ * - Company logo and header image
+ * - Job title and location
+ * - Navigation tabs (Description, Company, etc.)
+ * - Job responsibilities and required skills
+ * - Action buttons (Apply, Chat)
+ * 
+ * @param {JobDetailsProps} props - Component props
+ */
+export default function JobDetails({ job, onApply, onChat }: JobDetailsProps) {
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        {/* Header Section */}
-        <View style={styles.header}>
+      {/* Header Section */}
+      <View style={styles.headerContainer}>
+        {/* Background Image */}
+        <View style={styles.headerBackground}>
           <Image
-            source={require('../../assets/images/drops_leaf_brushes_129736_3840x2160.jpg')} 
-            style={styles.backgroundImage}
+            source={require('../../assets/images/drops_leaf_brushes_129736_3840x2160.jpg')}
+            style={styles.headerImage}
           />
-          <View style={styles.logoContainer}>
+        </View>
+        {/* Company Logo - Positioned to overlap header and content */}
+        <View style={styles.logoContainer}>
+          <View style={styles.logoWrapper}>
             <Image
-              source={require('../../assets/icon_imgs/png/003-google.png')} 
-              style={styles.logo}
+              source={job.logoIcon || require('../../assets/icon_imgs/png/003-google.png')}
+              style={styles.companyLogo}
+              resizeMode="contain"
             />
           </View>
         </View>
+      </View>
 
-        {/* Job Title and Location */}
-        <View style={styles.titleContainer}>
-          <Text style={styles.jobTitle}>{job.title}</Text>
-          <Text style={styles.location}>{job.location}</Text>
-          <Text style={styles.companyName}>{job.company}</Text>
-        </View>
+      {/* Job Information Section */}
+      <View style={styles.jobInfo}>
+        <Text style={styles.jobTitle}>{job.title}</Text>
+        <Text style={styles.location}>{job.location}</Text>
+      </View>
 
-        {/* Navigation Tabs */}
-        <View style={styles.tabs}>
-          {['Description', 'Company', 'Applicant', 'Salary'].map((tab, index) => (
-            <TouchableOpacity key={index} style={styles.tab}>
-              <Text style={styles.tabText}>{tab}</Text>
-              {index === 0 && <View style={styles.activeTabIndicator} />}
-            </TouchableOpacity>
-          ))}
-        </View>
+      {/* Navigation Tabs - Horizontally scrollable */}
+      <View style={styles.tabsContainer}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <TouchableOpacity style={[styles.tab, styles.activeTab]}>
+            <Text style={[styles.tabText, styles.activeTabText]}>Description</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab}>
+            <Text style={styles.tabText}>Company</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab}>
+            <Text style={styles.tabText}>Applicant</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab}>
+            <Text style={styles.tabText}>Salary</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
 
-        {/* Job Responsibilities Section */}
-        <ScrollView style={styles.scrollView}>
+      {/* Main Content - Scrollable */}
+      <ScrollView style={styles.content}>
+        {/* Responsibilities Section */}
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Job Responsibilities</Text>
           {job.responsibilities.map((resp, index) => (
-            <View key={index} style={styles.responsibilityItem}>
-              <Text style={styles.checkIcon}>✔️</Text>
-              <Text style={styles.responsibility}>{resp}</Text>
+            <View key={index} style={styles.bulletPoint}>
+              <Text style={styles.bulletDot}>•</Text>
+              <Text style={styles.bulletText}>{resp}</Text>
             </View>
           ))}
+        </View>
 
-          {/* Skills Needed Section */}
+        {/* Skills Section */}
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Skills Needed</Text>
           <View style={styles.skillsContainer}>
             {job.skills.map((skill, index) => (
-              <Text key={index} style={styles.skillTag}>{skill}</Text>
+              <React.Fragment key={index}>
+                <Text style={styles.skillText}>{skill}</Text>
+                {index < job.skills.length - 1 && (
+                  <Text style={styles.skillDot}>•</Text>
+                )}
+              </React.Fragment>
             ))}
           </View>
-        </ScrollView>
+        </View>
+      </ScrollView>
 
-        {/* Apply Button */}
-        <TouchableOpacity style={styles.applyButton}>
+      {/* Footer - Action Buttons */}
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.applyButton}
+          onPress={onApply}
+          accessibilityLabel="Apply for this job"
+        >
           <Text style={styles.applyButtonText}>Apply Now</Text>
         </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.chatButton}
+          onPress={onChat}
+          accessibilityLabel="Chat about this job"
+        >
+          <View style={styles.chatIconContainer}>
+            <Ionicons name="chatbubble-outline" size={24} color="#fff" />
+          </View>
+        </TouchableOpacity>
       </View>
-
-      {/* Floating Chat Button */}
-      <TouchableOpacity style={styles.chatButton}>
-        <Text style={styles.chatButtonText}>💬</Text> {/* Placeholder for chat icon */}
-      </TouchableOpacity>
     </View>
   );
-};
+}
 
+/**
+ * Styles
+ */
 const styles = StyleSheet.create({
+  // Container styles
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5', 
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
+    backgroundColor: '#fff',
   },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
-    width: '100%',
-    maxWidth: 600,
-    padding: 16,
-  },
-  header: {
+  
+  // Header styles
+  headerContainer: {
+    height: 120,
     position: 'relative',
+  },
+  headerBackground: {
+    height: '100%',
     width: '100%',
-    height: 150,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    backgroundColor: '#f5f5f5',
     overflow: 'hidden',
   },
-  backgroundImage: {
+  headerImage: {
     width: '100%',
     height: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    resizeMode: 'cover',
   },
+  
+  // Logo styles
   logoContainer: {
     position: 'absolute',
-    bottom: -40, // Overlapping the header
-    left: '50%',
-    transform: [{ translateX: -40 }], // Center the logo
-    backgroundColor: '#FFFFFF',
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
+    bottom: -25,
+    width: '100%',
+    alignItems: 'center',
+  },
+  logoWrapper: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowRadius: 3,
+    elevation: 2,
   },
-  logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+  companyLogo: {
+    width: 35,
+    height: 35,
   },
-  titleContainer: {
+  
+  // Job info styles
+  jobInfo: {
+    marginTop: 35,
     alignItems: 'center',
-    marginTop: 40, // Space below the logo
+    paddingHorizontal: 20,
   },
   jobTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: '600',
+    color: '#000',
+    marginBottom: 8,
   },
   location: {
     fontSize: 16,
-    color: '#A0A0A0',
-    textAlign: 'center',
+    color: '#83829A',
   },
-  companyName: {
-    fontSize: 14,
-    color: '#A0A0A0',
-    textAlign: 'center',
-  },
-  tabs: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 16,
+  
+  // Tab navigation styles
+  tabsContainer: {
+    marginTop: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F2F2',
   },
   tab: {
-    padding: 10,
-    position: 'relative',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  activeTab: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#4B7BE5',
   },
   tabText: {
-    fontSize: 16,
+    fontSize: 14,
+    color: '#83829A',
+  },
+  activeTabText: {
     color: '#4B7BE5',
+    fontWeight: '500',
   },
-  activeTabIndicator: {
-    height: 2,
-    backgroundColor: '#4B7BE5',
-    position: 'absolute',
-    bottom: -5,
-    left: 0,
-    right: 0,
-  },
-  scrollView: {
+  
+  // Content styles
+  content: {
     flex: 1,
-    padding: 16,
+  },
+  section: {
+    padding: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  responsibilityItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  checkIcon: {
-    marginRight: 8,
-  },
-  responsibility: {
-    fontSize: 14,
-  },
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    fontWeight: '600',
+    color: '#000',
     marginBottom: 16,
   },
-  skillTag: {
-    backgroundColor: '#E8F0FE',
-    borderRadius: 20,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    fontSize: 14,
-    color: '#4B7BE5',
+  
+  // Bullet point styles
+  bulletPoint: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    paddingRight: 16,
+  },
+  bulletDot: {
     marginRight: 8,
-    marginBottom: 8,
+    color: '#83829A',
+  },
+  bulletText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#83829A',
+    lineHeight: 20,
+  },
+  
+  // Skills styles
+  skillsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  skillText: {
+    fontSize: 14,
+    color: '#83829A',
+  },
+  skillDot: {
+    color: '#83829A',
+    marginHorizontal: 8,
+  },
+  
+  // Footer styles
+  footer: {
+    flexDirection: 'row',
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F2F2',
+    backgroundColor: '#fff',
   },
   applyButton: {
+    flex: 1,
     backgroundColor: '#4B7BE5',
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 16,
+    borderRadius: 12,
     alignItems: 'center',
-    marginTop: 16,
+    marginRight: 12,
   },
   applyButtonText: {
-    color: '#FFFFFF',
+    color: '#fff',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   chatButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#4B7BE5',
-    borderRadius: 30,
-    padding: 10,
+    width: 56,
+    height: 56,
   },
-  chatButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  chatIconContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 12,
+    backgroundColor: '#4B7BE5',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
-
-export default JobDetails;

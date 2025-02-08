@@ -67,7 +67,10 @@ export const RecommendedJobs = () => {
           </View>
 
           <View style={styles.cardFooter}>
-            <TouchableOpacity style={styles.applyButton}>
+            <TouchableOpacity 
+              style={styles.applyButton}
+              onPress={() => router.push(`/job-details/${job.id}`)}
+            >
               <Text style={styles.applyButtonText}>Apply Now</Text>
             </TouchableOpacity>
             <Text style={styles.salary}>

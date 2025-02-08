@@ -1,64 +1,101 @@
-# UIChallenge Mobile
+# Job Search UI Challenge
 
-Welcome to the UIChallenge Mobile project! 🎉 This is an Expo application created with React Native, designed to showcase job listings with a clean and modern UI.
+Mobile UI implementation for a job search platform using React Native and Expo.
 
-## Getting Started
+## Prerequisites
 
-To get started with this project, follow the steps below to set up your environment and run the app.
-
-### Prerequisites
-
-Before you begin, make sure you have the following installed on your machine:
-
-- **Node.js**: You can download it from [nodejs.org](https://nodejs.org/).
-- **npm**: This comes bundled with Node.js, but you can also install it separately if needed.
-- **Expo CLI**: This is a command-line tool for running React Native apps. Install it globally by running:
-  ```bash
-  npm install -g expo-cli
-  ```
-
-### Installation
-
-1. **Clone the Repository**:
-   Open your terminal and run the following command to clone the repository:
+1. Node.js LTS release - [Download](https://nodejs.org/en/)
+2. Git - [Download](https://git-scm.com/)
+3. Expo CLI: 
    ```bash
-   git clone https://github.com/ngabonzizaguy/UIChallenge_mobile.git
+   npm install -g expo-cli
    ```
+4. Expo Go app on your device - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [iOS](https://apps.apple.com/app/expo-go/id982107779)
 
-2. **Navigate to the Project Directory**:
-   Change into the project directory:
-   ```bash
-   cd UIChallenge_mobile
-   ```
+## Setup
 
-3. **Install Dependencies**:
-   Run the following command to install all the necessary dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+# Clone repository
+git clone https://github.com/ngabonzizaguy/UIChallenge_mobile.git
+cd UIChallenge_mobile
 
-### Running the App
+# Install dependencies
+npm install
 
-Now that everything is set up, you can run the app using Expo:
+# Create development build (recommended)
+npx expo prebuild
+```
 
-1. **Start the Development Server**:
-   In your terminal, run:
+## Development
+
+1. Start the development server:
    ```bash
    npx expo start
    ```
 
-2. **Open the App**:
-   - You can scan the QR code displayed in your terminal using the Expo Go app on your mobile device.
-   - Alternatively, you can run the app in an Android or iOS simulator.
+2. Run on your device:
+   - Scan QR code with Expo Go (Android) or Camera app (iOS)
+   - Press 'a' for Android emulator
+   - Press 'i' for iOS simulator
 
-### Usage
+## Troubleshooting
 
-Once the app is running, you can explore the job listings, view job details, and even apply for jobs! Feel free to modify the code and make it your own.
+If you encounter issues with Expo Go:
 
+1. **Create a development build (Recommended)**
+   ```bash
+   npx expo prebuild
+   npx expo run:android  # for Android
+   npx expo run:ios      # for iOS
+   ```
 
-## Learn More
+2. **Clean Project**
+   ```bash
+   npx expo start --clear
+   ```
 
-To learn more about developing your project with Expo, check out the following resources:
+3. **Reset Cache**
+   ```bash
+   npm start -- --reset-cache
+   ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or dive into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+4. **Update Expo CLI**
+   ```bash
+   npm install -g expo-cli@latest
+   ```
+
+5. **Check Environment**
+   ```bash
+   npx expo-env-info
+   ```
+
+## Project Structure
+```
+├── app/                # Navigation and screens
+├── components/         # Reusable components
+├── assets/            # Images and fonts
+└── types/             # TypeScript definitions
+```
+
+## Features
+- Home screen with recommended and recent jobs
+- Detailed job listings with company info
+- Interactive job cards with apply functionality
+- Modern UI design with smooth animations
+
+## Tech Stack
+- React Native & Expo
+- TypeScript
+- Expo Router
+- React Native Reanimated
+
+## Resources
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/)
+- [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+
+## License
+MIT License
+
+---
+Challenge Implementation by Ngabonziza Guy
