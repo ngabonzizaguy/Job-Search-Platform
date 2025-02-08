@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-// Define and export the Job type
 export interface Job {
-  title: string; // This can be mapped from 'position'
+  title: string;
   location: string;
   company: string;
-  responsibilities: string[]; // This can be mapped from 'description' or 'requirements'
-  skills: string[]; // This can be derived from the job data
+  responsibilities: string[];
+  skills: string[]; 
 }
 
 interface JobDetailsProps {
-  job: Job; // Specify the type for the job prop
+  job: Job; 
 }
 
 const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
@@ -21,12 +20,12 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
         {/* Header Section */}
         <View style={styles.header}>
           <Image
-            source={require('../../assets/images/drops_leaf_brushes_129736_3840x2160.jpg')} // Background image
+            source={require('../../assets/images/drops_leaf_brushes_129736_3840x2160.jpg')} 
             style={styles.backgroundImage}
           />
           <View style={styles.logoContainer}>
             <Image
-              source={require('../../assets/icon_imgs/png/003-google.png')} // Company logo
+              source={require('../../assets/icon_imgs/png/003-google.png')} 
               style={styles.logo}
             />
           </View>
@@ -44,7 +43,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
           {['Description', 'Company', 'Applicant', 'Salary'].map((tab, index) => (
             <TouchableOpacity key={index} style={styles.tab}>
               <Text style={styles.tabText}>{tab}</Text>
-              {index === 0 && <View style={styles.activeTabIndicator} />} {/* Active tab indicator */}
+              {index === 0 && <View style={styles.activeTabIndicator} />}
             </TouchableOpacity>
           ))}
         </View>
@@ -85,7 +84,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5', // Light gray background
+    backgroundColor: '#F5F5F5', 
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
