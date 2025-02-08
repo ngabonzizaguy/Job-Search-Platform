@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import JobDetails, { Job } from '../../components/job/JobDetails';
 
-// Mock data - in a real app, this would come from an API
+// Mock data - api data would be fetched from the backend
 const jobsData = {
   '1': {
     company: 'Pinterest, Inc.',
@@ -119,14 +119,15 @@ export default function JobDetailsScreen() {
   };
 
   const handleApply = () => {
-    // In a real app, this would navigate to an application form or external link
+    // this would navigate to an application form or external link
     console.log('Apply clicked for job:', id);
   };
 
   const handleChat = () => {
-    // In a real app, this would open a chat interface
+    // this would open a chat interface
     console.log('Chat clicked for job:', id);
   };
+
 
   const handleBack = () => {
     // Navigate back to the home tab

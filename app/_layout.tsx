@@ -20,10 +20,10 @@ SplashScreen.preventAutoHideAsync();
  * - job-details/[id]: Modal screen for job details
  */
 export default function RootLayout() {
-  // Load any custom fonts here
+  // Load custom fonts
   const [fontsLoaded] = useFonts({
     // DMSans: require('../assets/fonts/DMSans-Regular.ttf'),
-    // Add more custom fonts as needed
+    // where custom fonts are stored
   });
 
   // Handle layout ready callback

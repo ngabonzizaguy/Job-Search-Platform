@@ -34,7 +34,7 @@ interface JobDetailsProps {
 /**
  * JobDetails Component
  * 
- * A detailed view of a job posting, including:
+ * Detailed view of a job posting, including:
  * - Company logo and header image
  * - Job title and location
  * - Navigation tabs (Description, Company, etc.)
