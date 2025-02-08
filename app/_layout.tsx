@@ -4,14 +4,13 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
 
-// Keep the splash screen visible while we fetch resources
+// Keep the splash screen visible while fetching resources
 SplashScreen.preventAutoHideAsync();
 
 /**
  * Root Layout Component
  * 
- * This component serves as the main layout wrapper for the entire application.
- * It handles:
+ * component:  main layout wrapper for the entire application.
  * 1. Font loading and initialization
  * 2. Splash screen management
  * 3. Navigation stack configuration

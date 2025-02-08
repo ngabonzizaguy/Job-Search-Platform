@@ -1,4 +1,4 @@
-# Job Search UI Challenge
+# Mobile UI Challenge [Job Search]
 
 Mobile UI implementation for a job search platform using React Native and Expo.
 
@@ -11,29 +11,30 @@ Mobile UI implementation for a job search platform using React Native and Expo.
    npm install -g expo-cli
    ```
 
-### Platform-specific Requirements
+### Requirements
 
-#### Android Development
+1. Install webpack for web development:
+   ```bash
+   npx expo install @expo/webpack-config
+   ```
+
+2. Expo Go app on your device - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [iOS](https://apps.apple.com/app/expo-go/id982107779)
+
+Note: For development without Expo Go, additional setup is required:
+
+#### Android Development (if not using Expo Go)
 1. Install Android Studio - [Download](https://developer.android.com/studio)
 2. Install Android SDK (via Android Studio)
 3. Set up environment variables:
    - Add ANDROID_HOME to your Path (e.g., C:\Users\USERNAME\AppData\Local\Android\Sdk)
    - Add platform-tools to your Path (e.g., %ANDROID_HOME%\platform-tools)
 
-#### iOS Development (macOS only)
+#### iOS Development (macOS only, if not using Expo Go)
 1. Install Xcode from the Mac App Store
 2. Install Xcode Command Line Tools:
    ```bash
    xcode-select --install
    ```
-
-#### Web Development
-1. Install webpack:
-   ```bash
-   npx expo install @expo/webpack-config
-   ```
-
-4. Expo Go app on your device - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [iOS](https://apps.apple.com/app/expo-go/id982107779)
 
 ## Setup
 
@@ -47,7 +48,41 @@ npm install
 
 # Create development build (recommended)
 npx expo prebuild
-```
+
+# Future Features
+- User Authentication & Profile Management
+  - Social media login integration
+  - Professional profile creation
+  - Resume upload and parsing
+  - Skills assessment tests
+
+- Advanced Job Search
+  - AI-powered job recommendations
+  - Salary insights and comparisons
+  - Company reviews and ratings
+  - Location-based job filtering
+  - Remote work options
+
+- Application Tracking
+  - Application status dashboard
+  - Interview scheduling
+  - Document management
+  - Follow-up reminders
+
+- Networking Features
+  - Professional networking
+  - Direct messaging with recruiters
+  - Company follow functionality
+  - Industry news feed
+
+- Mobile-Specific Features
+  - Push notifications for job matches
+  - One-click apply
+  - Voice search
+  - Offline mode
+  - Calendar integration
+
+Note: These features would be implemented in future releases
 
 ## Development
 
@@ -130,7 +165,7 @@ npx expo prebuild
 - Expo Router
 - React Native Reanimated
 
-## Resources
+## Resources I used
 - [Expo Documentation](https://docs.expo.dev/)
 - [React Native Documentation](https://reactnative.dev/)
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
