@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-// Define the Job type
-interface Job {
-  title: string;
+// Define and export the Job type
+export interface Job {
+  title: string; // This can be mapped from 'position'
   location: string;
   company: string;
-  responsibilities: string[];
-  skills: string[];
+  responsibilities: string[]; // This can be mapped from 'description' or 'requirements'
+  skills: string[]; // This can be derived from the job data
 }
 
 interface JobDetailsProps {
@@ -21,7 +21,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ job }) => {
         {/* Header Section */}
         <View style={styles.header}>
           <Image
-            source={require('../../assets/backgrounds/office-workspace.jpg')} // Background image
+            source={require('../../assets/images/drops_leaf_brushes_129736_3840x2160.jpg')} // Background image
             style={styles.backgroundImage}
           />
           <View style={styles.logoContainer}>

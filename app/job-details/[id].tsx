@@ -1,6 +1,9 @@
+import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import JobDetails from '../../components/job/JobDetails';
+import { Job } from '../../components/job/JobDetails';
 
 // Mock data - in a real app, this would come from an API
 const jobsData = {
@@ -73,9 +76,9 @@ const jobsData = {
 export default function JobDetailsScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const job = jobsData[id as keyof typeof jobsData];
+  const jobData = jobsData[id as keyof typeof jobsData];
 
-  if (!job) {
+  if (!jobData) {
     return (
       <SafeAreaView style={styles.container}>
         <Text>Job not found</Text>
@@ -83,74 +86,18 @@ export default function JobDetailsScreen() {
     );
   }
 
+  // Transform the job data to match the Job interface
+  const job: Job = {
+    title: jobData.position, // Map 'position' to 'title'
+    location: jobData.location,
+    company: jobData.company,
+    responsibilities: jobData.description ? [jobData.description] : [], // Assuming description is a single string
+    skills: jobData.requirements, // Assuming requirements are the skills needed
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Job Details</Text>
-        <TouchableOpacity style={styles.bookmarkButton}>
-          <Ionicons name="bookmark-outline" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView style={styles.content}>
-        {/* Company Info */}
-        <View style={styles.companyInfo}>
-          <View style={[styles.logoContainer, { backgroundColor: `${job.logoColor}20` }]}>
-            <Ionicons name={job.logoIcon as any} size={32} color={job.logoColor} />
-          </View>
-          <Text style={styles.position}>{job.position}</Text>
-          <View style={styles.companyMeta}>
-            <Text style={styles.company}>{job.company}</Text>
-            <Text style={styles.location}>{job.location}</Text>
-          </View>
-        </View>
-
-        {/* Job Meta Info */}
-        <View style={styles.metaContainer}>
-          <View style={styles.metaItem}>
-            <Text style={styles.metaLabel}>Salary</Text>
-            <Text style={styles.metaValue}>{job.salary}</Text>
-          </View>
-          <View style={styles.metaItem}>
-            <Text style={styles.metaLabel}>Type</Text>
-            <Text style={styles.metaValue}>{job.type}</Text>
-          </View>
-          <View style={styles.metaItem}>
-            <Text style={styles.metaLabel}>Level</Text>
-            <Text style={styles.metaValue}>{job.level}</Text>
-          </View>
-        </View>
-
-        {/* Description */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Description</Text>
-          <Text style={styles.description}>{job.description}</Text>
-        </View>
-
-        {/* Requirements */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Requirements</Text>
-          <View style={styles.requirementsList}>
-            {job.requirements.map((requirement, index) => (
-              <View key={index} style={styles.requirementItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#4B7BE5" />
-                <Text style={styles.requirementText}>{requirement}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      </ScrollView>
-
-      {/* Apply Button */}
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.applyButton}>
-          <Text style={styles.applyButtonText}>Apply Now</Text>
-        </TouchableOpacity>
-      </View>
+      <JobDetails job={job} /> {/* Pass the transformed job data */}
     </SafeAreaView>
   );
 }
