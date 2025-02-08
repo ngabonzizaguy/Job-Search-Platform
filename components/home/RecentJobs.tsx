@@ -119,11 +119,11 @@ const styles = StyleSheet.create({
     left: 50,
   },
   salaryAmount: {
-    fontWeight: 'bold', // Make the dollar amount bold
-    color: '#000', // Color for the dollar amount
+    fontWeight: 'bold',
+    color: '#000', 
   },
   salaryText: {
-    color: '#A0A0A0', // Lighter color for the "/Month" text
+    color: '#A0A0A0',
     fontSize: 11,
   },
   timeAgo: {
