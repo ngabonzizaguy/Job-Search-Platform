@@ -10,6 +10,29 @@ Mobile UI implementation for a job search platform using React Native and Expo.
    ```bash
    npm install -g expo-cli
    ```
+
+### Platform-specific Requirements
+
+#### Android Development
+1. Install Android Studio - [Download](https://developer.android.com/studio)
+2. Install Android SDK (via Android Studio)
+3. Set up environment variables:
+   - Add ANDROID_HOME to your Path (e.g., C:\Users\USERNAME\AppData\Local\Android\Sdk)
+   - Add platform-tools to your Path (e.g., %ANDROID_HOME%\platform-tools)
+
+#### iOS Development (macOS only)
+1. Install Xcode from the Mac App Store
+2. Install Xcode Command Line Tools:
+   ```bash
+   xcode-select --install
+   ```
+
+#### Web Development
+1. Install webpack:
+   ```bash
+   npx expo install @expo/webpack-config
+   ```
+
 4. Expo Go app on your device - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) or [iOS](https://apps.apple.com/app/expo-go/id982107779)
 
 ## Setup
@@ -30,41 +53,59 @@ npx expo prebuild
 
 1. Start the development server:
    ```bash
+   # For all platforms
    npx expo start
+
+   # Platform specific
+   npx expo start --android
+   npx expo start --ios
+   npx expo start --web
    ```
 
 2. Run on your device:
    - Scan QR code with Expo Go (Android) or Camera app (iOS)
    - Press 'a' for Android emulator
    - Press 'i' for iOS simulator
+   - Press 'w' for web browser
 
 ## Troubleshooting
 
-If you encounter issues with Expo Go:
+### Android Issues
+1. **SDK not found**:
+   - Open Android Studio → Settings → Appearance & Behavior → System Settings → Android SDK
+   - Note down the Android SDK Location
+   - Set ANDROID_HOME environment variable to this path
+   - Add platform-tools to Path: %ANDROID_HOME%\platform-tools
 
-1. **Create a development build (Recommended)**
+2. **Port 8081 in use**:
    ```bash
-   npx expo prebuild
-   npx expo run:android  # for Android
-   npx expo run:ios      # for iOS
+   # Kill the process using port 8081
+   npx kill-port 8081
    ```
 
-2. **Clean Project**
+### iOS Issues
+1. **Simulator not working**:
+   ```bash
+   sudo xcode-select -s /Applications/Xcode.app
+   ```
+
+### General Issues
+1. **Clean Project**:
    ```bash
    npx expo start --clear
    ```
 
-3. **Reset Cache**
+2. **Reset Cache**:
    ```bash
    npm start -- --reset-cache
    ```
 
-4. **Update Expo CLI**
+3. **Update Expo CLI**:
    ```bash
    npm install -g expo-cli@latest
    ```
 
-5. **Check Environment**
+4. **Check Environment**:
    ```bash
    npx expo-env-info
    ```
@@ -93,6 +134,8 @@ If you encounter issues with Expo Go:
 - [Expo Documentation](https://docs.expo.dev/)
 - [React Native Documentation](https://reactnative.dev/)
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
+- [Android Studio Setup Guide](https://developer.android.com/studio/intro)
+- [iOS Development Setup](https://docs.expo.dev/workflow/ios-simulator/)
 
 ## License
 MIT License
