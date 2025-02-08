@@ -2,8 +2,9 @@ import { Stack } from "expo-router";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { View } from "react-native";
 
-// Prevent the splash screen from auto-hiding before we're ready
+// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 /**
@@ -40,30 +41,31 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false, // Global header configuration
-      }}
-    >
-      {/* Main Tab Navigation */}
-      <Stack.Screen 
-        name="(tabs)" 
-        options={{ 
-          headerShown: false 
-        }} 
-      />
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <Stack
+        screenOptions={{
+          headerShown: false, // Global header configuration
+          animation: 'fade',
+          contentStyle: { backgroundColor: 'white' }
+        }}
+      >
+        {/* Main Tab Navigation */}
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ 
+            headerShown: false 
+          }} 
+        />
 
-      {/* Job Details Modal Screen */}
-      <Stack.Screen 
-        name="job-details/[id]" 
-        options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          // Add gesture enabled for better UX
-          gestureEnabled: true,
-          gestureDirection: 'vertical',
-        }} 
-      />
-    </Stack>
+        {/* Job Details Modal Screen */}
+        <Stack.Screen 
+          name="job-details/[id]" 
+          options={{
+            presentation: 'card',
+            animation: 'slide_from_right',
+          }} 
+        />
+      </Stack>
+    </View>
   );
 }
