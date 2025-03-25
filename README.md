@@ -1,4 +1,4 @@
-# Mobile UI Challenge [Job Search]
+# Job Searching Platform
 
 Mobile UI implementation for a job search platform using React Native and Expo.
 
